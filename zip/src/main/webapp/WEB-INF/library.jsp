@@ -45,7 +45,10 @@
         <tbody>
         <c:forEach items="${files}" var="o">
             <tr>
-                <td><c:out value="${o.value}"/></td>
+                <td><c:out value="${o.value}"/><form action="/zips/get" method="get">
+                    <button type="submit" class="btn btn-primary" name="id" value="${o.key}">download zip</button>
+                </form></td>
+
             </tr>
 
         </c:forEach>
@@ -54,34 +57,13 @@
 
 </div>
 
-
-
-
-
-
 <nav class="navbar navbar-default">
-
-
-        <form class="md-form" action="/add" method="post" enctype="multipart/form-data">
-        <div class="file-field">
-            <div class="btn btn-primary btn-sm float-left">
-                <span>Choose file</span>
-                <input type="file" name="File">
-                <button type="submit" class="btn btn-primary">add file</button>
-            </div>
-
-        </div>
     </form>
-    </form>
-      <form action="/reset" method="post">
+      <form action="/zips/resetzip" method="post">
           <button type="submit" class="btn btn-primary">reset</button>
       </form>
-      <form action="/create" method="get">
-          <button type="submit" class="btn btn-primary">create zip</button>
-      </form>
-
-    <form action="/zips" method="get">
-        <button type="submit" class="btn btn-primary">go to zip library</button>
+    <form action="/" method="get">
+        <button type="submit" class="btn btn-primary">go back</button>
     </form>
 </div>
 

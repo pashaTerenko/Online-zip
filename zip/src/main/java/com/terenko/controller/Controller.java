@@ -66,30 +66,23 @@ public class Controller {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getZip(Model model) {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String getZip(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
 
         CustomUser dbUser = userService.getUserByLogin(login);
-
         try {
-            byte[] zip=ser.getZip(dbUser);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType("application/zip"));
-            headers.add("Content-Disposition", "attachment; filename=\"YourArchive.zip\"");
-            return new ResponseEntity<byte[]>(zip,headers,HttpStatus.OK);
-
+            ser.getZip(dbUser);
         } catch (IOException e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            e.printStackTrace();
         }
-
+        return "redirect:/";
     }
     @RequestMapping(value = "/newuser", method = RequestMethod.POST)
     public String update(@RequestParam String login,
                          @RequestParam String password,
-                         @RequestParam(required = false) String email,
-                         @RequestParam(required = false) String phone,
+
                          Model model) {
         if (userService.existsByLogin(login)) {
             model.addAttribute("exists", true);
